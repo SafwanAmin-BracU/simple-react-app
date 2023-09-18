@@ -1,32 +1,40 @@
 import { Todo } from "./TodoApp";
 import "./style.css";
+import { FaTrash } from "react-icons/fa6";
 
 interface TodoItemProps {
 	todo: Todo;
 	removeTodo: (id: string) => void;
+	toggleTodo: (id: string, value: boolean) => void;
 }
 
-const TodoItem = ({ todo, removeTodo }: TodoItemProps) => {
+const TodoItem = ({ todo, removeTodo, toggleTodo }: TodoItemProps) => {
 	return (
-		<div className="">
-			<li>
-				<div className="form-check">
-					<label className="form-check-label">
-						<input
-							className="checkbox"
-							type="checkbox"
-							value={todo.completed ? "1" : "0"}
-						/>
-						{todo.text}
-						<i className="input-helper"></i>
-					</label>
-				</div>
-				<i
-					className="remove mdi mdi-close-circle-outline"
-					onClick={() => removeTodo(todo.id)}
-				></i>
-			</li>
-		</div>
+		<li className="list-item d-flex align-items-center px-2 py-2 border border-1 shadow-sm rounded-2 text-dark">
+			<label className="list-item-label">
+				<input
+					type="checkbox"
+					defaultChecked={todo.completed}
+					data-list-item-checkbox
+					className="form-check-input mx-3"
+					onChange={(e) => toggleTodo(todo.id, e.target.checked)}
+				/>
+				<span
+					data-list-item-text
+					className="list-item-text"
+				>
+					{todo.text}
+				</span>
+			</label>
+			<button
+				className="btn btn-outline-danger btn-sm ms-auto d-flex align-items-center gap-1"
+				onClick={() => removeTodo(todo.id)}
+				data-button-delete
+			>
+				<FaTrash />
+				DELETE
+			</button>
+		</li>
 	);
 };
 

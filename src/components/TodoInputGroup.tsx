@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Todo } from "./TodoApp";
 import "./style.css";
+import { BiAddToQueue } from "react-icons/bi";
 
 interface TodoInputGroupProps {
 	todos: Todo[];
@@ -25,25 +26,30 @@ const TodoInputGroup = ({ todos, setTodos }: TodoInputGroupProps) => {
 			text: newTodoText.trim(),
 			completed: false,
 		};
+		// console.log(newTodo);
 		setTodos(() => [...todos, newTodo]);
 		setNewTodoText("");
 	};
 
 	return (
-		<div className="add-items d-flex">
+		<div
+			// id="new-todo-form"
+			className="input-group p-3"
+		>
 			<input
 				type="text"
-				className="form-control todo-list-input"
-				placeholder="What do you need to do today?"
+				id="newTodoInput"
+				className="form-control"
+				value={newTodoText}
 				onChange={(e) => setNewTodoText(e.target.value)}
 				onKeyDown={(e) => e.key === "Enter" && addTodo()}
-				value={newTodoText}
 			/>
 			<button
-				className="add btn btn-primary font-weight-bold todo-list-add-btn"
+				className="btn btn-outline-primary d-flex align-items-center gap-1"
 				onClick={addTodo}
 			>
-				Add
+				<BiAddToQueue />
+				Add Todo
 			</button>
 		</div>
 	);
